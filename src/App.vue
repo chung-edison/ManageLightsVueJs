@@ -9,6 +9,7 @@
             <b-nav-item to="/buildings">Buildings</b-nav-item>
             <b-nav-item to="/rooms">Rooms</b-nav-item>
             <b-nav-item to="/lights">Lights</b-nav-item>
+            <b-nav-item to="/all">EVERYTHING!</b-nav-item>
           </b-navbar-nav>
         </b-collapse>
       </b-navbar>

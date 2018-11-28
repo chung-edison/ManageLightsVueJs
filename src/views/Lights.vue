@@ -26,6 +26,7 @@
 
 <script>
     export default {
+        name: 'Lights',
         data () {
             return {
                 resultSet: [],
