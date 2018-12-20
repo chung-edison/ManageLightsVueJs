@@ -14,7 +14,8 @@
                 <th scope="row">{{light.id}}</th>
                 <td>{{light.level}}</td>
                 <td>
-                    <button v-if="light.status === 'ON'" v-on:click="switchLight(light.id)"><img src="../assets/on.png"/></button>
+                    <button v-if="light.status === 'ON'" v-on:click="switchLight(light.id)"><img
+                            src="../assets/on.png"/></button>
                     <button v-else v-on:click="switchLight(light.id)"><img src="../assets/off.png"/></button>
                 </td>
                 <td>{{light.roomId}}</td>
@@ -25,32 +26,69 @@
 </template>
 
 <script>
+    import SockJS from "sockjs-client";
+    import Stomp from "webstomp-client";
+
     export default {
         name: 'Lights',
-        data () {
+        data() {
             return {
                 resultSet: [],
+                connected: false
             }
         },
-        head : {
+        head: {
             title: {
                 inner: 'Manage Lights'
             }
         },
-        methods : {
+        methods: {
             switchLight: function (id) {
                 this.$http
-                    .put(this.$masterUrl + '/lights/' + id +'/switch')
-                    .then(this.getLights)
+                    .put(this.$masterUrl + '/api/lights/' + id + '/switch')
+                //.then(this.getLights)
             },
+            /*
             getLights : function () {
                 this.$http
                     .get(this.$masterUrl + '/lights')
                     .then(response => (this.resultSet = response.data))
+            },
+            */
+            connect() {
+                this.socket = new SockJS(this.$masterUrl + "/websockets");
+                this.stompClient = Stomp.over(this.socket);
+                this.stompClient.connect(
+                    {},
+                    frame => {
+                        this.connected = true;
+                        /* eslint-disable-next-line no-console */
+                        console.log('Connected: ' + frame);
+                        this.stompClient.subscribe("/topic/lights", res => this.resultSet = JSON.parse(res.body));
+                    },
+                    error => {
+                        /* eslint-disable-next-line no-console */
+                        console.log(error);
+                        this.connected = false;
+                    }
+                );
+            },
+            disconnect() {
+                if (this.stompClient) {
+                    this.stompClient.disconnect();
+                }
+                this.connected = false;
+            },
+            tickleConnection() {
+                this.connected ? this.disconnect() : this.connect();
             }
         },
-        mounted () {
-            this.getLights();
+        mounted() {
+            // this.getLights();
+            this.connect();
+        },
+        beforeDestroy() {
+            this.disconnect();
         }
     }
 </script>
@@ -60,17 +98,21 @@
     #lights {
         margin-top: 60px;
     }
+
     h3 {
         margin: 40px 0 0;
     }
+
     ul {
         list-style-type: none;
         padding: 0;
     }
+
     li {
         display: inline-block;
         margin: 0 10px;
     }
+
     a {
         color: #42b983;
     }

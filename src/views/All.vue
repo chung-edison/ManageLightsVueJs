@@ -13,11 +13,6 @@
 
     export default {
         name: 'All',
-        data () {
-            return {
-                resultSet: [],
-            }
-        },
         components: {
             Buildings,
             Rooms,
@@ -27,11 +22,6 @@
             title: {
                 inner: 'Manage EVERYTHING!'
             }
-        },
-        mounted () {
-            this.$http
-                .get(this.$masterUrl + '/buildings')
-                .then(response => (this.resultSet = response.data))
         }
     }
 </script>

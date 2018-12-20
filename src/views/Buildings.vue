@@ -32,7 +32,7 @@
         },
         mounted () {
             this.$http
-                .get(this.$masterUrl + '/buildings')
+                .get(this.$masterUrl + '/api/buildings')
                 .then(response => (this.resultSet = response.data))
         }
     }
