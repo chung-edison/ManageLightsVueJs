@@ -36,7 +36,7 @@
         },
         mounted () {
             this.$http
-                .get('https://faircorp-app-ce.cleverapps.io/api/rooms')
+                .get(this.$masterUrl + '/rooms')
                 .then(response => (this.resultSet = response.data))
         }
     }

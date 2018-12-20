@@ -9,6 +9,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueHead from 'vue-head'
 
+Vue.prototype.$masterUrl = 'https://faircorp-app-ce.cleverapps.io/api'
+
 Vue.config.productionTip = false
 
 Vue.use(BootstrapVue);

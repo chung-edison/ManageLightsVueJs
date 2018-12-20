@@ -40,12 +40,12 @@
         methods : {
             switchLight: function (id) {
                 this.$http
-                    .put('https://faircorp-app-ce.cleverapps.io/api/lights/' + id +'/switch')
+                    .put(this.$masterUrl + '/lights/' + id +'/switch')
                     .then(this.getLights)
             },
             getLights : function () {
                 this.$http
-                    .get('https://faircorp-app-ce.cleverapps.io/api/lights')
+                    .get(this.$masterUrl + '/lights')
                     .then(response => (this.resultSet = response.data))
             }
         },
