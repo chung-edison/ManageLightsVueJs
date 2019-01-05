@@ -10,6 +10,7 @@ import VueAxios from 'vue-axios'
 import VueHead from 'vue-head'
 
 Vue.prototype.$masterUrl = 'https://faircorp-app-ce.cleverapps.io'
+//Vue.prototype.$masterUrl = 'http://localhost:8080'
 
 Vue.config.productionTip = false
 
